@@ -12,16 +12,51 @@ public class UsersModels
 {
     public static string COOKIE_NAME = "ism";
 
-    public static UsersModels instance { get; set; }
+    protected static UsersModels instance = new UsersModels();
     private static object syncRoot = new Object();
 
-    private static List<Users> UserDB;
+    protected static List<Users> UserDB;
+    public static List<Users> List
+    {
+        get
+        {
+            if (UserDB.Count != 0)
+            {
 
-    private UsersModels()
+                UserDB.Reverse();
+
+                return UserDB.ToList<Users>();
+
+            }
+            else
+            {
+                return null;
+            }
+        }
+    }
+    public List<Users> ListUsers
+    {
+        get
+        {
+            if (UserDB.Count != 0)
+            {
+
+                UserDB.Reverse();
+
+                return UserDB.ToList<Users>();
+
+            }else
+            {
+                return null;
+            }
+        }
+    }
+    public UsersModels()
     {
         UserDB = new List<Users>();
+
     }
-    static UsersModels() { }
+    static UsersModels() { UserDB = new List<Users>(); }
 
 
 
@@ -34,7 +69,10 @@ public class UsersModels
                 lock (syncRoot)
                 {
                     if (instance == null)
+                    {
+
                         instance = new UsersModels();
+                    }
                 }
             }
 
@@ -87,5 +125,7 @@ public class UsersModels
 
     }
 
-    
+
+
+
 }

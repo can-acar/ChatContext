@@ -8,19 +8,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css"> 
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
     <link href="Style/signin.css" rel="stylesheet" />
     <link href="Style/chat.css" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
-    <script src="Scripts/jquery.signalR-2.0.1.js"></script>
-    <script src="/signalr/hubs" type="text/javascript"></script>
-    <script src="Scripts/chatcontext.js"></script>
-   
+    <script src='<%: ResolveClientUrl("~/Scripts/jquery.signalR-2.0.1.js") %>'></script>
+    <script src='<%: ResolveClientUrl("~/signalr/hubs") %>'></script>
+    <script src='<%: ResolveClientUrl("~/Scripts/chatcontext.js") %>'></script>
+
 </head>
-<body  data-isauthenticated ="<%=this.IsUserAuthenticated%>" data-clientinfo =<%=this.ClientInfo%>>
-    <form runat="server" id="frmsignin" >
+<body data-isauthenticated="<%=IsUserAuthenticated%>" <%=ClientInfo%>>
+    <form runat="server" id="frmsignin">
         <asp:PlaceHolder ID="signin" runat="server" Visible="true">
             <div class="container">
                 <div class="row">

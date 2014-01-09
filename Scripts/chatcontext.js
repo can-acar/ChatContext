@@ -1,15 +1,16 @@
 ﻿(function ($, window, client) {
 
     window.hubReady = false;
+    var tryingToReconnect = false;
     if (!window.hubReady) {
         window.hubReady = $.connection.hub.start();
     }
+
     window.hubReady.done(function (params) {
-      
+
         var isAuthenticated = $("body").data("isauthenticated");
         var ClientMeta = $("body").data("clientinfo");
-          
-        console.log(isAuthenticated, ClientMeta);
+
 
         if (isAuthenticated === "True") {
 
@@ -20,18 +21,28 @@
         }
     });
 
+    $.connection.hub.disconnected(function () {
+        if (tryingToReconnect) {
+
+            client.server.GetOut();
+            $.connection.hub.stop();
+
+        }
+    }
+    )
+
 
     var ChatContext = {
         init: function (params, client, done) {
             var _this = this;
             this.client = client;
-            
+
             console.log(arguments);
 
         },
         sendMessage: function () {
             this.client.sendMessage(text).done(function (message) {
-                
+
             })
         }
 
