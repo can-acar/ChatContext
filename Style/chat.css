@@ -54,7 +54,7 @@
 
 
 .area-header {
-    padding: 2px 2px 2px 2px;
+    padding: 5px;
     border-bottom: 1px solid #dddddd;
     /*border-top-right-radius: 3px;*/
     /*border-top-left-radius: 3px;*/
@@ -449,4 +449,12 @@ textarea:focus {
     height: 0;
     border-color: transparent;
     border-style: solid;
+}
+
+.maximized {
+    height: 355px;
+}
+
+.minimized {
+    height: 35px;
 }

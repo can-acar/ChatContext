@@ -22,7 +22,7 @@ public class Client : Hub
     {
         var UserData = JsonConvert.DeserializeObject<Users>(meta);
         UserData.ConnectionID = Context.ConnectionId;
-        
+
         UsersModels.AddUser(UserData);
 
         Admin.Notify();
@@ -30,14 +30,17 @@ public class Client : Hub
         return UserData; //"Connection Done!.";
     }
 
-    public override Task OnConnected()
+    public override async Task OnConnected()
     {
-
         Admin.Notify();
-        return base.OnConnected();
+        await base.OnConnected();
     }
 
-    public override Task OnDisconnected()
+    public override async Task OnReconnected()
+    {
+        await OnConnected();
+    }
+    public override async Task OnDisconnected()
     {
         var user = UsersModels.List;
 
@@ -45,14 +48,8 @@ public class Client : Hub
 
         Admin.Notify();
 
-        return base.OnDisconnected();
+        await base.OnDisconnected();
     }
 
 
-    public override Task OnReconnected()
-    {
-        Admin.Notify();
-
-        return base.OnReconnected();
-    }
 }

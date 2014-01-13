@@ -82,7 +82,9 @@ public class UsersModels
 
     public string ClientID()
     {
-        return UserDB.GetHashCode().ToString();
+        dynamic id =   Guid.NewGuid().ToString().Split('-')[0].ToString();
+        return id;
+        //UserDB.GetHashCode().ToString();
     }
 
     public void Add(Users user)

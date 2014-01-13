@@ -22,7 +22,7 @@ public class Admin : Hub
         OnConnectedUser();
     }
 
-    public List<Users> GetClientList()               // Dictionary<string, object>
+    public List<Users> GetBodyList()               // Dictionary<string, object>
     {
         IHubContext context = GlobalHost.ConnectionManager.GetHubContext<Admin>();
 
@@ -39,7 +39,7 @@ public class Admin : Hub
             //bodyList.Add("bodyList", UsersModels.List);
             bodyList.AddRange(UsersModels.List);
         }
-        context.Clients.All.bodyList(bodyList);
+        Clients.All.getBodyList(bodyList);
        // var _list = JsonConvert.SerializeObject(json).ToString();
         return bodyList;
     }
@@ -48,7 +48,7 @@ public class Admin : Hub
     {
         client = UsersModels.Instance;
 
-        OnConnectedUser = new AdminListener(GetClientList);
+        OnConnectedUser = new AdminListener(GetBodyList);
 
         return base.OnConnected();
     }

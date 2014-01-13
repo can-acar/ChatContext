@@ -14,10 +14,11 @@
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 
+   
     <script src='<%: ResolveClientUrl("~/Scripts/jquery.signalR-2.0.1.js") %>'></script>
     <script src='<%: ResolveClientUrl("~/signalr/hubs") %>'></script>
     <script src='<%: ResolveClientUrl("~/Scripts/chatcontext.js") %>'></script>
-
+  
 </head>
 <body data-isauthenticated="<%=IsUserAuthenticated%>" <%=ClientInfo%>>
     <form runat="server" id="frmsignin">

@@ -15,7 +15,6 @@
 
     <script src='<%: ResolveClientUrl("~/Scripts/jquery.signalR-2.0.1.js") %>'></script>
     <script src='<%: ResolveClientUrl("~/signalr/hubs") %>'></script>
-    <script src='<%: ResolveClientUrl("~/Scripts/admincontext.js") %>'></script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -31,7 +30,6 @@
 
                     </div>
                     <div class="area-body">
-
                         <div class="content  scrollable">
                         </div>
                     </div>
@@ -41,5 +39,7 @@
             </div>
         </div>
     </form>
+        <script src='<%: ResolveClientUrl("~/Scripts/admincontext.js") %>'></script>
+
 </body>
 </html>

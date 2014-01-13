@@ -28,8 +28,7 @@
             $.connection.hub.stop();
 
         }
-    }
-    )
+    });
 
 
     var ChatContext = {
