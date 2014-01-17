@@ -12,18 +12,15 @@ public class UsersModels
 {
     public static string COOKIE_NAME = "ism";
 
-    protected static UsersModels instance = new UsersModels();
+    private static UsersModels instance = new UsersModels();
     private static object syncRoot = new Object();
-
-    protected static List<Users> UserDB;
+    protected static ICollection<Users> UserDB;
     public static List<Users> List
     {
         get
         {
             if (UserDB.Count != 0)
             {
-
-                UserDB.Reverse();
 
                 return UserDB.ToList<Users>();
 
@@ -33,6 +30,7 @@ public class UsersModels
                 return null;
             }
         }
+
     }
     public List<Users> ListUsers
     {
@@ -41,24 +39,22 @@ public class UsersModels
             if (UserDB.Count != 0)
             {
 
-                UserDB.Reverse();
 
                 return UserDB.ToList<Users>();
 
-            }else
+            }
+            else
             {
                 return null;
             }
         }
+        
     }
     public UsersModels()
     {
         UserDB = new List<Users>();
 
     }
-    static UsersModels() { UserDB = new List<Users>(); }
-
-
 
     public static UsersModels Instance
     {
@@ -82,7 +78,7 @@ public class UsersModels
 
     public string ClientID()
     {
-        dynamic id =   Guid.NewGuid().ToString().Split('-')[0].ToString();
+        dynamic id = Guid.NewGuid().ToString().Split('-')[0].ToString();
         return id;
         //UserDB.GetHashCode().ToString();
     }
@@ -102,6 +98,11 @@ public class UsersModels
     {
         var user = UserDB.FirstOrDefault(n => n.ID == ID);
 
+        UserDB.Remove(user);
+    }
+
+    public void Remove(Users user)
+    {
         UserDB.Remove(user);
     }
     public static bool isUserExist(HttpRequestWrapper request)

@@ -10,45 +10,74 @@ using Newtonsoft.Json.Linq;
 public class Client : Hub
 {
 
+    UsersModels user = UsersModels.Instance;
+    Admin AdminInstance = Admin.Instance;
+
+
+    static IHubContext context = GlobalHost.ConnectionManager.GetHubContext<Client>();
     public void GetOut()
     {
-        var user = UsersModels.List;
+        var db = user.ListUsers.FirstOrDefault(n => n.ConnectionID == Context.ConnectionId);
 
-        user.Remove(user.FirstOrDefault(n => n.ConnectionID == Context.ConnectionId));
+        user.Remove(db);
 
         Admin.Notify();
     }
     public Users Join(string meta)
     {
         var UserData = JsonConvert.DeserializeObject<Users>(meta);
+
         UserData.ConnectionID = Context.ConnectionId;
 
-        UsersModels.AddUser(UserData);
+        user.Add(UserData);
 
         Admin.Notify();
 
-        return UserData; //"Connection Done!.";
+        return UserData;
+    }
+
+    public void sendMessage(string messageText, string UserID)
+    {
+
+        Admin.getMessage(messageText, UserID);
+    }
+    public static void getMessage(string messageText, string UserID)
+    {
+        dynamic user = UsersModels.List.FirstOrDefault(n => n.ID == UserID).ConnectionID;
+
+        context.Clients.Client(user.ToString()).sendMessage(messageText);
+    }
+
+    public static void isTyping(string UserID)
+    {
+
+        dynamic user = UsersModels.List.FirstOrDefault(n=>n.ID == UserID).ConnectionID;
+
+        context.Clients.Client(user.ToString()).isTyping(UserID);
+    }
+
+    public void sendTypingSignal(string userID)
+    {
+        Admin.sendTypingSignal(userID);
     }
 
     public override async Task OnConnected()
     {
-        Admin.Notify();
+
         await base.OnConnected();
     }
 
-    public override async Task OnReconnected()
-    {
-        await OnConnected();
-    }
-    public override async Task OnDisconnected()
-    {
-        var user = UsersModels.List;
 
-        user.Remove(user.FirstOrDefault(n => n.ConnectionID == Context.ConnectionId));
+    public override Task OnDisconnected()
+    {
+
+        var db = user.ListUsers.FirstOrDefault(n => n.ConnectionID == Context.ConnectionId);
+
+        user.Remove(db);
 
         Admin.Notify();
 
-        await base.OnDisconnected();
+        return base.OnDisconnected();
     }
 
 

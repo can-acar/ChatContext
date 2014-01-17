@@ -14,12 +14,11 @@ public partial class _Default : Page
 
     protected string ClientInfo { set; get; }
 
-    protected UsersModels user;
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        user = UsersModels.Instance;
-        
+
+
     }
 
 
@@ -33,7 +32,7 @@ public partial class _Default : Page
 
             var request = new HttpRequestWrapper(this.Request);
 
-            string ID = user.ClientID();
+            string ID = UsersModels.Instance.ClientID();
             Dictionary<string, object> meta = new Dictionary<string, object>();
             meta.Add("username", request.Form["username"].ToString());
             meta.Add("ID", ID.ToString());
